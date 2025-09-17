@@ -1,0 +1,13 @@
+title: Engineer's culture
+description: >
+  Know more about our engineer's culture.
+github_username: renatoaug
+linkedin_username: renatoames
+show_excerpts: true
+
+plugins:
+  - jekyll-feed
+  - github-pages
+
+repository: renatoaug/culture
+baseurl: '/culture'

@@ -1,0 +1,109 @@
+---
+layout: default
+title: Dream Team
+header_title: Our Dream Team 🚀
+---
+
+<section class="container">
+  <link rel="stylesheet" href="index.css" />
+  <script src="team-dev.js"></script>
+  <script src="team-product.js"></script>
+  <script src="team-ux.js"></script>
+  <script src="team-data.js"></script>
+  <script src="team-operation.js"></script>
+  <script src="util.js"></script>
+
+  <script>
+    function renderTeam(containerId, team) {
+      const container = document.getElementById(containerId)
+
+      team.forEach((member) => {
+        const updatedDescription = member.description.replace(
+          /getTotalYears\('(\d{2}\/\d{2}\/\d{4})'\)/g,
+          (match, birthDateString) => `${getTotalYears(birthDateString)}`,
+        )
+
+        const colDiv = document.createElement('div')
+        colDiv.classList.add('col')
+        colDiv.innerHTML = `
+          <div class="card">
+            <div class="content">
+              <div class="scroll">
+                <p>${updatedDescription}</p>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="info-section">
+                <img class="avatar" src="${member.avatar}" alt="avatar">
+                <div class="author">
+                  <p class="name">${member.name}</p>
+                  <span class="role">${member.role}_</span>
+                </div>
+              </div>
+              <div class="social-section">
+                <div class="social-links">
+                  ${
+                    member.linkedin
+                      ? `<a href="${member.linkedin}" target="_blank" rel="noopener noreferrer">
+                          <i class="fab fa-linkedin"></i>
+                        </a>`
+                      : ''
+                  }
+                  ${
+                    member.github
+                      ? `<a href="${member.github}" target="_blank" rel="noopener noreferrer">
+                          <i class="fab fa-github"></i>
+                        </a>`
+                      : ''
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+
+        container.appendChild(colDiv)
+      })
+    }
+  </script>
+
+  <div id="devTeamContainer" class="row">
+    <div class="col-wide">
+      <h2 align="left">Engineering_</h2>
+    </div>
+
+    <script>
+      renderTeam('devTeamContainer', devTeam)
+    </script>
+  </div>
+
+  <div id="productTeamContainer" class="row">
+    <div class="col-wide">
+      <h2 class="row-product" align="left">Product_</h2>
+    </div>
+
+    <script>
+      renderTeam('productTeamContainer', productTeam)
+    </script>
+  </div>
+
+  <div id="uxTeamContainer" class="row">
+    <div class="col-wide">
+      <h2 class="row-ux" align="left">UX_</h2>
+    </div>
+
+    <script>
+      renderTeam('uxTeamContainer', uxTeam)
+    </script>
+  </div>
+
+  <div id="dataTeamContainer" class="row">
+    <div class="col-wide">
+      <h2 class="row-data" align="left">Data_</h2>
+    </div>
+
+    <script>
+      renderTeam('dataTeamContainer', dataTeam)
+    </script>
+  </div>
+</section>
