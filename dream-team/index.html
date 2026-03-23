@@ -1,109 +1,153 @@
 ---
 layout: default
 title: Dream Team
-header_title: Our Dream Team 🚀
+hide_legacy_chrome: true
 ---
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<link rel="stylesheet" href="index.css" />
+<script src="team-dev.js"></script>
+<script src="team-product.js"></script>
+<script src="team-ux.js"></script>
+<script src="team-data.js"></script>
+<script src="util.js"></script>
+<style>
+  .culture-page {
+    position: relative;
+    min-height: 100vh;
+    background: transparent;
+  }
 
-<section class="container">
-  <link rel="stylesheet" href="index.css" />
-  <script src="team-dev.js"></script>
-  <script src="team-product.js"></script>
-  <script src="team-ux.js"></script>
-  <script src="team-data.js"></script>
-  <script src="team-operation.js"></script>
-  <script src="util.js"></script>
+  .culture-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(99, 102, 241, 0.08) 0%, transparent 42%),
+      radial-gradient(circle at 82% 10%, rgba(165, 180, 252, 0.06) 0%, transparent 40%),
+      linear-gradient(180deg, rgba(5, 7, 13, 0.72) 0%, rgba(5, 7, 13, 0.64) 55%, rgba(5, 7, 13, 0.6) 100%);
+  }
 
-  <script>
-    function renderTeam(containerId, team) {
-      const container = document.getElementById(containerId)
+  .culture-page > :not(.noise-bg) {
+    position: relative;
+    z-index: 2;
+  }
 
-      team.forEach((member) => {
-        const updatedDescription = member.description.replace(
-          /getTotalYears\('(\d{2}\/\d{2}\/\d{4})'\)/g,
-          (match, birthDateString) => `${getTotalYears(birthDateString)}`,
-        )
+  .culture-page .noise-bg {
+    opacity: 0.012;
+    background-size: 240px 240px;
+    mix-blend-mode: soft-light;
+  }
 
-        const colDiv = document.createElement('div')
-        colDiv.classList.add('col')
-        colDiv.innerHTML = `
-          <div class="card">
-            <div class="content">
-              <div class="scroll">
-                <p>${updatedDescription}</p>
-              </div>
-            </div>
-            <div class="card-footer">
-              <div class="info-section">
-                <img class="avatar" src="${member.avatar}" alt="avatar">
-                <div class="author">
-                  <p class="name">${member.name}</p>
-                  <span class="role">${member.role}_</span>
+</style>
+
+<div class="culture-page font-['Inter'] text-zinc-400 antialiased overflow-x-hidden">
+  <div class="noise-bg"></div>
+  {% include header.html active='dream-team' %}
+
+  <main class="pt-28 pb-20 px-6">
+    <section class="max-w-7xl mx-auto mb-12">
+      <div class="hero-glow"></div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-6">
+        <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+        <span class="text-xs tracking-wide text-zinc-300">Squad Directory</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-medium text-white tracking-tight leading-[1.1] mb-4">Dream Team</h1>
+      <p class="text-lg font-light text-zinc-400 max-w-3xl">
+        People, roles, and technical context that sustain our engineering culture.
+      </p>
+    </section>
+
+    <section class="max-w-7xl mx-auto team-section" id="devTeamContainer">
+      <div class="w-full mb-5"><h2 class="team-title team-title-dev">Engineering</h2></div>
+      <script>
+        function renderTeam(containerId, team) {
+          const container = document.getElementById(containerId)
+          team.forEach((member) => {
+            const updatedDescription = member.description.replace(
+              /getTotalYears\('(\d{2}\/\d{2}\/\d{4})'\)/g,
+              (match, birthDateString) => `${getTotalYears(birthDateString)}`,
+            )
+            const colDiv = document.createElement('div')
+            colDiv.classList.add('col')
+            colDiv.innerHTML = `
+              <article class="card">
+                <div class="content">
+                  <div class="scroll">
+                    <p>${updatedDescription}</p>
+                  </div>
                 </div>
-              </div>
-              <div class="social-section">
-                <div class="social-links">
-                  ${
-                    member.linkedin
-                      ? `<a href="${member.linkedin}" target="_blank" rel="noopener noreferrer">
-                          <i class="fab fa-linkedin"></i>
-                        </a>`
-                      : ''
-                  }
-                  ${
-                    member.github
-                      ? `<a href="${member.github}" target="_blank" rel="noopener noreferrer">
-                          <i class="fab fa-github"></i>
-                        </a>`
-                      : ''
-                  }
+                <div class="card-footer">
+                  <div class="info-section">
+                    <img class="avatar" src="${member.avatar}" alt="avatar" />
+                    <div class="author">
+                      <p class="name">${member.name}</p>
+                      <span class="role">${member.role}</span>
+                    </div>
+                  </div>
+                  <div class="social-section">
+                    <div class="social-links">
+                      ${member.linkedin ? `<a href="${member.linkedin}" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>` : ''}
+                      ${member.github ? `<a href="${member.github}" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>` : ''}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        `
+              </article>`
+            container.appendChild(colDiv)
+          })
+        }
+        renderTeam('devTeamContainer', devTeam)
+      </script>
+    </section>
 
-        container.appendChild(colDiv)
-      })
-    }
-  </script>
+    <section class="max-w-7xl mx-auto team-section" id="productTeamContainer">
+      <div class="w-full mb-5"><h2 class="team-title team-title-product">Product</h2></div>
+      <script>
+        renderTeam('productTeamContainer', productTeam)
+      </script>
+    </section>
 
-  <div id="devTeamContainer" class="row">
-    <div class="col-wide">
-      <h2 align="left">Engineering_</h2>
+    <section class="max-w-7xl mx-auto team-section" id="uxTeamContainer">
+      <div class="w-full mb-5"><h2 class="team-title team-title-ux">UX</h2></div>
+      <script>
+        renderTeam('uxTeamContainer', uxTeam)
+      </script>
+    </section>
+
+    <section class="max-w-7xl mx-auto team-section" id="dataTeamContainer">
+      <div class="w-full mb-5"><h2 class="team-title team-title-data">Data</h2></div>
+      <script>
+        renderTeam('dataTeamContainer', dataTeam)
+      </script>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/5 bg-black pt-16 pb-8 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-8 mb-16">
+        <div class="col-span-2 md:col-span-2">
+          <span class="text-white font-medium tracking-tighter text-lg block mb-6">CULTURE</span>
+          <p class="text-zinc-500 text-xs font-light max-w-xs">A living engineering culture reference to guide technical growth and collaboration.</p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h4 class="text-white text-xs font-medium uppercase tracking-wider">Product</h4>
+          <a href="{{ site.baseurl }}/dream-team" class="text-zinc-500 text-sm hover:text-white transition-colors">Dream Team</a>
+          <a href="{{ site.baseurl }}/career-ladder" class="text-zinc-500 text-sm hover:text-white transition-colors">Career Ladder</a>
+          <a href="{{ site.baseurl }}/stacks" class="text-zinc-500 text-sm hover:text-white transition-colors">Stacks</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <h4 class="text-white text-xs font-medium uppercase tracking-wider">Company</h4>
+          <a href="https://github.com/renatoaug/culture" target="_blank" rel="noopener noreferrer" class="text-zinc-500 text-sm hover:text-white transition-colors">Repository</a>
+          <a href="{{ site.baseurl }}/docs/dream-team.html" class="text-zinc-500 text-sm hover:text-white transition-colors">Docs</a>
+          <a href="https://linkedin.com/in/renatoames" target="_blank" rel="noopener noreferrer" class="text-zinc-500 text-sm hover:text-white transition-colors">Contact</a>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5">
+        <p class="text-zinc-600 text-xs font-light">© 2026 Culture by Renato Ames.</p>
+      </div>
     </div>
-
-    <script>
-      renderTeam('devTeamContainer', devTeam)
-    </script>
-  </div>
-
-  <div id="productTeamContainer" class="row">
-    <div class="col-wide">
-      <h2 class="row-product" align="left">Product_</h2>
-    </div>
-
-    <script>
-      renderTeam('productTeamContainer', productTeam)
-    </script>
-  </div>
-
-  <div id="uxTeamContainer" class="row">
-    <div class="col-wide">
-      <h2 class="row-ux" align="left">UX_</h2>
-    </div>
-
-    <script>
-      renderTeam('uxTeamContainer', uxTeam)
-    </script>
-  </div>
-
-  <div id="dataTeamContainer" class="row">
-    <div class="col-wide">
-      <h2 class="row-data" align="left">Data_</h2>
-    </div>
-
-    <script>
-      renderTeam('dataTeamContainer', dataTeam)
-    </script>
-  </div>
-</section>
+  </footer>
+</div>

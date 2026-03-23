@@ -428,31 +428,75 @@ document.addEventListener('DOMContentLoaded', function () {
     const jobContainer = document.querySelector('.job-container')
     jobContainer.innerHTML = ''
 
+    const levelBadgeMap = {
+      operational: 'Operational',
+      tactical: 'Tactical',
+      strategic: 'Strategic',
+    }
+
+    let stepIndex = 1
+    const handled = new Set()
+
+    const makeColumn = (job) => {
+      const badge = levelBadgeMap[job.level] || 'Level'
+      const firstResponsibility = job.responsibilities?.[0] || ''
+      return `
+        <div class="platform__step-col" id="description_${job.id}">
+          <div class="platform__step-title">${job.name}</div>
+          <div class="platform__step-body">${job.description}</div>
+          <div class="platform__step-body platform__step-extra">${firstResponsibility}</div>
+          <div class="platform__step-badge">${badge}</div>
+        </div>
+      `
+    }
+
     jobs.forEach((job) => {
-      if (!job.pair) {
-        const jobSingleContainer = document.createElement('div')
-        jobSingleContainer.classList.add('job')
-        const jobElement = createJobElement(job)
-        jobSingleContainer.appendChild(jobElement)
-        jobContainer.appendChild(jobSingleContainer)
-      } else if (!document.getElementById(`description_${job.id}`)) {
-        const pairJob = jobs.find((j) => j.id === job.pair)
-        if (pairJob) {
-          const jobPairContainer = document.createElement('div')
-          jobPairContainer.classList.add('job-pairs')
+      if (handled.has(job.id)) return
 
-          const jobElement1 = createJobElement(job)
-          const jobElement2 = createJobElement(pairJob)
+      const pairJob = job.pair ? jobs.find((j) => j.id === job.pair) : null
+      const hasPair = pairJob && !handled.has(pairJob.id)
 
-          jobElement1.id = `description_${job.id}`
-          jobElement2.id = `description_${pairJob.id}`
+      const step = document.createElement('div')
+      const stepNumber = String(stepIndex).padStart(2, '0')
+      stepIndex += 1
 
-          jobPairContainer.appendChild(jobElement1)
-          jobPairContainer.appendChild(jobElement2)
+      if (hasPair) {
+        step.classList.add('platform__step', 'platform__step--pair')
 
-          jobContainer.appendChild(jobPairContainer)
-        }
+        const [left, right] =
+          job.id.startsWith('specialist') && !pairJob.id.startsWith('specialist')
+            ? [job, pairJob]
+            : pairJob.id.startsWith('specialist') && !job.id.startsWith('specialist')
+              ? [pairJob, job]
+              : [job, pairJob]
+
+        step.innerHTML = `
+          <div class="platform__step-num">${stepNumber}</div>
+          <div class="platform__step-pair">
+            ${makeColumn(left)}
+            <div class="platform__step-vdivider"></div>
+            ${makeColumn(right)}
+          </div>
+        `
+
+        handled.add(job.id)
+        handled.add(pairJob.id)
+      } else {
+        step.classList.add('platform__step')
+        step.id = `description_${job.id}`
+        step.innerHTML = `
+          <div class="platform__step-num">${stepNumber}</div>
+          <div>
+            <div class="platform__step-title">${job.name}</div>
+            <div class="platform__step-body">${job.description}</div>
+            <div class="platform__step-body platform__step-extra">${job.responsibilities?.[0] || ''}</div>
+            <div class="platform__step-badge">${levelBadgeMap[job.level] || 'Level'}</div>
+          </div>
+        `
+        handled.add(job.id)
       }
+
+      jobContainer.appendChild(step)
     })
   }
 
@@ -504,73 +548,29 @@ document.addEventListener('DOMContentLoaded', function () {
   function getColor(role) {
     switch (role) {
       case 'R':
-        return '#4caf50'
+        return '#f97316'
       case 'A':
-        return '#f44336'
+        return '#a855f7'
       case 'C':
-        return '#2196f3'
+        return '#38bdf8'
       case 'I':
-        return '#ff9800'
+        return '#71717a'
       default:
         return '#444'
     }
-  }
-
-  function createJobElement(job) {
-    const isGestor = ['coordinator', 'manager', 'general_manager', 'director'].includes(job.id)
-    const levelMap = {
-      operational: {
-        icon: isGestor ? 'supervisor_account' : 'check_circle',
-        class: 'level-operational',
-      },
-      tactical: { icon: isGestor ? 'groups' : 'laptop_mac', class: 'level-tactical' },
-      strategic: { icon: isGestor ? 'groups' : 'laptop_mac', class: 'level-strategic' },
-    }
-    const level = levelMap[job.level] || levelMap.operational
-
-    const jobElement = document.createElement('div')
-    jobElement.classList.add('job-card', level.class)
-    jobElement.id = `description_${job.id}`
-
-    jobElement.innerHTML = `
-      <div style="flex:1">
-        <div class="job-title">
-          <span class="material-icons level-icon">${level.icon}</span>
-          ${job.name}
-          <button class="toggle-details" title="Ver mais" aria-expanded="false" aria-controls="details_${job.id}">
-            <span class="material-icons">expand_more</span>
-          </button>
-        </div>
-        <div class="job-desc">${job.description}</div>
-        <div class="job-details" id="details_${job.id}">
-          <div class="job-section-title"><span class="material-icons">checklist</span>Responsibilities</div>
-          <ul class="job-list" style="margin-bottom: 15px;">
-            ${job.responsibilities.map((item) => `<li><span class="material-icons">check</span>${item}</li>`).join('')}
-          </ul>
-          <div class="job-section-title"><span class="material-icons">psychology</span>Behaviors</div>
-          <ul class="job-list">
-            ${job.behaviors.map((item) => `<li><span class="material-icons">check</span>${item}</li>`).join('')}
-          </ul>
-        </div>
-      </div>
-    `
-
-    jobElement.querySelector('.toggle-details').onclick = function () {
-      jobElement.classList.toggle('expanded')
-      this.setAttribute('aria-expanded', jobElement.classList.contains('expanded'))
-    }
-
-    return jobElement
   }
 
   function createRoleElement(role) {
     const roleElement = document.createElement('div')
     roleElement.classList.add('role-description')
     roleElement.innerHTML = `
+      <div class="role-chip-wrap">
+        <span class="role-chip">Functional role</span>
+      </div>
       <h3>${role.name}</h3>
-      <p>${role.description}</p>
-      <ul>
-        ${role.responsibilities.map((responsibility) => `<li>${responsibility}</li>`).join('')}
+      <p class="role-context">${role.description}</p>
+      <ul class="role-items">
+        ${role.responsibilities.map((responsibility) => `<li><span class="material-icons">check_circle</span><span>${responsibility}</span></li>`).join('')}
       </ul>
     `
     return roleElement

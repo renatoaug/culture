@@ -1,30 +1,84 @@
 ---
 layout: default
 title: Career Plan
-header_title: Our career plan 🚀
 ---
 
-<div>
+<div class="career-page">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .career-page {
+      position: relative;
+      min-height: 100vh;
+      background: transparent;
+    }
+
+    .career-page::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(99, 102, 241, 0.08) 0%, transparent 42%),
+        radial-gradient(circle at 82% 10%, rgba(165, 180, 252, 0.06) 0%, transparent 40%),
+        linear-gradient(180deg, rgba(5, 7, 13, 0.72) 0%, rgba(5, 7, 13, 0.64) 55%, rgba(5, 7, 13, 0.6) 100%);
+    }
+
+    .career-page > :not(.noise-bg) {
+      position: relative;
+      z-index: 2;
+    }
+
+    .noise-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.012;
+      background-size: 240px 240px;
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 350px;
+      background: radial-gradient(circle at center, rgb(249 115 22 / 16%) 0%, transparent 65%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
+  <div class="noise-bg"></div>
+  {% include header.html active='career-ladder' %}
+
   <link rel="stylesheet" href="index.css" />
   <link rel="stylesheet" href="mobile.css" />
   <script defer src="index.js"></script>
 
-  <section class="summary">
-    <h2>Summary</h2>
-    <ul>
-      <li><a href="#career-path" class="smooth-scroll">Career in Y</a></li>
-      <li>
-        <a href="#level-responsibilities" class="smooth-scroll">Levels of Impact</a>
-      </li>
-      <li><a href="#job-descriptions" class="smooth-scroll">Roles and responsibilities</a></li>
-      <li><a href="#functional-roles" class="smooth-scroll">Functional roles</a></li>
-      <li><a href="#raci-table" class="smooth-scroll">RACI table</a></li>
-    </ul>
+  <main class="pt-28 pb-20 px-6 relative z-10">
+  <section class="career-hero max-w-7xl mx-auto relative z-10">
+    <div class="hero-glow"></div>
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-6">
+      <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+      <span class="text-xs tracking-wide text-zinc-300">Growth Framework</span>
+    </div>
+    <h1 class="text-4xl md:text-6xl font-light text-white tracking-[-0.03em] leading-[1.08] mb-4 font-['Bricolage Grotesque']">Career Ladder</h1>
+    <p class="text-lg font-light text-zinc-400 max-w-3xl">
+      Levels, role expectations, and responsibility models that guide career progression.
+    </p>
   </section>
 
   <section id="career-path">
-    <h2 align="left">Career in Y_</h2>
-
     <svg
       width="100%"
       height="750"
@@ -46,61 +100,61 @@ header_title: Our career plan 🚀
       <line x1="550" y1="230" x2="550" y2="240" stroke="#fff" stroke-width="4" />
 
       <a href="#description_junior">
-        <rect x="360" y="580" width="80" height="40" rx="10" ry="10" fill="#4a90e2" />
+        <rect x="360" y="580" width="80" height="40" rx="10" ry="10" fill="#38bdf8" />
         <text x="400" y="605" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Junior
         </text>
       </a>
       <a href="#description_pleno">
-        <rect x="360" y="510" width="80" height="40" rx="10" ry="10" fill="#4a90e2" />
+        <rect x="360" y="510" width="80" height="40" rx="10" ry="10" fill="#38bdf8" />
         <text x="400" y="535" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Middle
         </text>
       </a>
       <a href="#description_senior">
-        <rect x="360" y="440" width="80" height="40" rx="10" ry="10" fill="#4a90e2" />
+        <rect x="360" y="440" width="80" height="40" rx="10" ry="10" fill="#38bdf8" />
         <text x="400" y="465" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Senior
         </text>
       </a>
       <a href="#description_coordinator">
-        <rect x="170" y="370" width="160" height="40" rx="10" ry="10" fill="#ff6f61" />
+        <rect x="170" y="370" width="160" height="40" rx="10" ry="10" fill="#f97316" />
         <text x="250" y="395" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Coordinator
         </text>
       </a>
       <a href="#description_specialist1">
-        <rect x="470" y="370" width="160" height="40" rx="10" ry="10" fill="#ff6f61" />
+        <rect x="470" y="370" width="160" height="40" rx="10" ry="10" fill="#f97316" />
         <text x="550" y="395" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Specialist I
         </text>
       </a>
       <a href="#description_manager">
-        <rect x="170" y="300" width="160" height="40" rx="10" ry="10" fill="#ff6f61" />
+        <rect x="170" y="300" width="160" height="40" rx="10" ry="10" fill="#f97316" />
         <text x="250" y="325" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Manager
         </text>
       </a>
       <a href="#description_specialist2">
-        <rect x="470" y="300" width="160" height="40" rx="10" ry="10" fill="#ff6f61" />
+        <rect x="470" y="300" width="160" height="40" rx="10" ry="10" fill="#f97316" />
         <text x="550" y="325" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Specialist II
         </text>
       </a>
       <a href="#description_general_manager">
-        <rect x="170" y="230" width="160" height="40" rx="10" ry="10" fill="#8bc34a" />
+        <rect x="170" y="230" width="160" height="40" rx="10" ry="10" fill="#a855f7" />
         <text x="250" y="255" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           General Manager
         </text>
       </a>
       <a href="#description_specialist3">
-        <rect x="470" y="230" width="160" height="40" rx="10" ry="10" fill="#8bc34a" />
+        <rect x="470" y="230" width="160" height="40" rx="10" ry="10" fill="#a855f7" />
         <text x="550" y="255" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Specialist III
         </text>
       </a>
       <a href="#description_director">
-        <rect x="170" y="160" width="160" height="40" rx="10" ry="10" fill="#8bc34a" />
+        <rect x="170" y="160" width="160" height="40" rx="10" ry="10" fill="#a855f7" />
         <text x="250" y="185" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">
           Director
         </text>
@@ -109,13 +163,13 @@ header_title: Our career plan 🚀
       <path
         d="M 20 580 C 30 580, 40 560, 40 540 S 30 500, 40 470, 30 450, 20 450"
         fill="none"
-        stroke="#4a90e2"
+        stroke="#38bdf8"
         stroke-width="4"
       />
       <text
         x="20"
         y="515"
-        fill="#4a90e2"
+        fill="#38bdf8"
         font-size="16"
         font-weight="bold"
         text-anchor="middle"
@@ -127,13 +181,13 @@ header_title: Our career plan 🚀
       <path
         d="M 20 420 C 30 420, 40 400, 40 380 S 30 350, 40 320, 30 310, 20 310"
         fill="none"
-        stroke="#ff6f61"
+        stroke="#f97316"
         stroke-width="4"
       />
       <text
         x="20"
         y="375"
-        fill="#ff6f61"
+        fill="#f97316"
         font-size="16"
         font-weight="bold"
         text-anchor="middle"
@@ -145,13 +199,13 @@ header_title: Our career plan 🚀
       <path
         d="M 20 290 C 30 290, 40 270, 40 240 S 30 210, 40 190, 30 150, 20 150"
         fill="none"
-        stroke="#8bc34a"
+        stroke="#a855f7"
         stroke-width="4"
       />
       <text
         x="20"
         y="220"
-        fill="#8bc34a"
+        fill="#a855f7"
         font-size="16"
         font-weight="bold"
         text-anchor="middle"
@@ -163,14 +217,18 @@ header_title: Our career plan 🚀
   </section>
 
   <section id="level-responsibilities">
-    <h2 align="left">Levels of contribution_</h2>
+    <h2 align="left">Levels of contribution</h2>
+    <p class="explanation-text">
+      This model clarifies how impact evolves from execution to strategy, helping teams understand
+      expectations, ownership boundaries, and growth direction at each level.
+    </p>
 
-    <div class="levels">
+    <div class="levels levels-modern">
       <div class="level-container">
-        <h3 class="level-title strategic-title">
-          <i class="material-icons">lightbulb</i> Strategic
-        </h3>
         <div class="level level-strategic">
+          <h3 class="level-title strategic-title">
+            <i class="material-icons">lightbulb</i> Strategic
+          </h3>
           <div class="responsibility">
             <i class="material-icons">groups</i>
             <p>Develops leaders</p>
@@ -186,10 +244,10 @@ header_title: Our career plan 🚀
         </div>
       </div>
       <div class="level-container">
-        <h3 class="level-title tactical-title">
-          <i class="material-icons">architecture</i> Tactical
-        </h3>
         <div class="level level-tactical">
+          <h3 class="level-title tactical-title">
+            <i class="material-icons">architecture</i> Tactical
+          </h3>
           <div class="responsibility">
             <i class="material-icons">school</i>
             <p>Is a reference in the team</p>
@@ -205,10 +263,10 @@ header_title: Our career plan 🚀
         </div>
       </div>
       <div class="level-container">
-        <h3 class="level-title operational-title">
-          <i class="material-icons">task_alt</i> Operational
-        </h3>
         <div class="level level-operational">
+          <h3 class="level-title operational-title">
+            <i class="material-icons">task_alt</i> Operational
+          </h3>
           <div class="responsibility">
             <i class="material-icons">done_all</i>
             <p>Executes the strategy</p>
@@ -227,13 +285,23 @@ header_title: Our career plan 🚀
   </section>
 
   <section id="job-descriptions">
-    <h2 align="left">Organizational structure_</h2>
+    <h2 align="left">Organizational structure</h2>
 
-    <div class="job-container"></div>
+    <div class="platform">
+      <h3 class="section-title">
+        From role to
+        <span class="text-gradient">leadership in progression</span>
+      </h3>
+      <p class="section-sub">
+        Clear milestones from Junior to Director, with expectations, behaviors, and accountability at
+        every level.
+      </p>
+      <div class="platform__steps job-container"></div>
+    </div>
   </section>
 
   <section id="functional-roles">
-    <h2 align="left">Functional roles_</h2>
+    <h2 align="left">Functional roles</h2>
     <p class="explanation-text">
       In addition to formal roles, we have <span class="highlight-text">functional roles</span> that can
       be assumed temporarily according to the strategic needs of the squad or tribe. These
@@ -246,7 +314,7 @@ header_title: Our career plan 🚀
   </section>
 
   <section id="raci-table">
-    <h2 align="left">RACI table_</h2>
+    <h2 align="left">RACI table</h2>
 
     <p class="explanation-text">
       We use the <span class="highlight-text">RACI model</span> to clearly define the responsibilities of each role in relation to tasks and decisions. The RACI is a management tool that helps ensure that everyone knows who is responsible, who has authority, who should be consulted and who needs to be informed about each activity. This promotes transparency and efficiency, minimizing conflicts and ensuring that all collaborators are aligned with their duties and expectations.
@@ -289,20 +357,23 @@ header_title: Our career plan 🚀
       </select>
     </div>
 
-    <table class="raci-table">
-      <thead>
-        <tr>
-          <th>Task / Role</th>
-          <th>Head</th>
-          <th>EM</th>
-          <th>TL</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="raci-table-wrap">
+      <table class="raci-table">
+        <thead>
+          <tr>
+            <th>Task / Role</th>
+            <th>Head</th>
+            <th>EM</th>
+            <th>TL</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </section>
 
   <button id="back-to-top">
     <span class="material-icons">arrow_upward</span>
   </button>
+  </main>
 </div>
